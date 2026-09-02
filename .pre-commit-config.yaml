@@ -18,3 +18,8 @@ repos:
     rev: v0.6.9
     hooks:
       - id: ruff
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v3.29.1
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]

@@ -23,6 +23,19 @@ jobs:
         run: poetry install --with dev
       - name: Run pre-commit
         run: poetry run pre-commit run --all-files
+      - name: Validate conventional commit messages
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            git fetch origin "${{ github.base_ref }}"
+            for sha in $(git rev-list --no-merges "origin/${{ github.base_ref }}..HEAD"); do
+              git log -1 --pretty=%B "$sha" > /tmp/commit-msg.txt
+              poetry run pre-commit run --hook-stage commit-msg --commit-msg-filename /tmp/commit-msg.txt
+            done
+          else
+            git log -1 --pretty=%B HEAD > /tmp/commit-msg.txt
+            poetry run pre-commit run --hook-stage commit-msg --commit-msg-filename /tmp/commit-msg.txt
+          fi
 
   tests:
     runs-on: ubuntu-latest

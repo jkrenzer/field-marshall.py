@@ -17,6 +17,6 @@ poetry run poe lint
 - PoeThePoet task runner
 - bump-my-version for semantic versioning
 - black, isort, and ruff formatting/linting
-- pre-commit hook enforcement
+- pre-commit hook enforcement, including conventional commit message validation
 - GitHub Actions CI for pre-commit and tests
 - GitHub Actions publish workflow for PyPI releases
