@@ -1,0 +1,75 @@
+[tool.poetry]
+name = "field-marshall"
+version = "0.1.0"
+description = "Starter Python application scaffold"
+authors = ["jkrenzer <jkrenzer@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{ include = "field_marshall", from = "src" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.10.0"
+bump-my-version = "^0.28.1"
+isort = "^5.13.2"
+poethepoet = "^0.30.0"
+pre-commit = "^3.8.0"
+pytest = "^8.3.3"
+ruff = "^0.6.9"
+
+[tool.poe.tasks]
+test = "pytest"
+precommit = "pre-commit run --all-files"
+
+[[tool.poe.tasks.format.sequence]]
+cmd = "black src tests"
+
+[[tool.poe.tasks.format.sequence]]
+cmd = "isort src tests"
+
+[[tool.poe.tasks.lint.sequence]]
+cmd = "ruff check src tests"
+
+[[tool.poe.tasks.lint.sequence]]
+cmd = "black --check src tests"
+
+[[tool.poe.tasks.lint.sequence]]
+cmd = "isort --check-only src tests"
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+src_paths = ["src", "tests"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.bumpversion]
+current_version = "0.1.0"
+parse = "(?P<major>\\d+)\\.(?P<minor>\\d+)\\.(?P<patch>\\d+)"
+serialize = ["{major}.{minor}.{patch}"]
+search = "{current_version}"
+replace = "{new_version}"
+
+[[tool.bumpversion.files]]
+filename = "pyproject.toml"
+
+[[tool.bumpversion.files]]
+filename = "src/field_marshall/__init__.py"
+
+[build-system]
+requires = ["poetry-core>=1.9.0"]
+build-backend = "poetry.core.masonry.api"

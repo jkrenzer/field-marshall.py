@@ -1,0 +1,19 @@
+{
+  "name": "field-marshall-dev",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "poetry install --with dev && poetry run pre-commit install --install-hooks && poetry run pre-commit install --hook-type commit-msg --install-hooks",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "charliermarsh.ruff",
+        "GitHub.vscode-pull-request-github",
+        "github.vscode-github-actions",
+        "vivaxy.vscode-conventional-commits"
+      ]
+    }
+  }
+}
